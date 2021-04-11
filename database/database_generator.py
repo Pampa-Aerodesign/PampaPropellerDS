@@ -33,8 +33,7 @@ def download_propeller_data(propeller_links):
     headers = {"User-Agent" : "Mozilla/5.0 (X11; CrOS x86_64 13729.72.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.116 Safari/537.36"
                }
     #Get the path to this folder
-    path = os.getcwd() + "/raw_files/"
-
+    path = os.getcwd() + "/database/raw_files/"
     
     for link in propeller_links:         
         # obtain filename by splitting url and getting 
