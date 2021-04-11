@@ -26,7 +26,6 @@ if model_name is None:
   st.stop()
 
 
-
 model_dict = {model_name : uploaded_file}
 
 df = read_APC(model_dict)

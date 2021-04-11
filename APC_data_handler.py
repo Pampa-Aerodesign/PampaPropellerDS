@@ -9,7 +9,7 @@ import streamlit as st
 def APC_to_csv(file_lines, verbose, save_to_path = None):
     """Converts list of lines in an APC performance file (file_lines) to a csv buffer
 
-    :param file_lines: List with all the lines in a file 
+    :param file_lines: A Python list with all the lines in a file 
     :type file_lines: list
     :param verbose: If True will print logs
     :type verbose: bool
@@ -35,7 +35,8 @@ def APC_to_csv(file_lines, verbose, save_to_path = None):
 
     line_count = 1
 
-    for line in file_lines: 
+    for line in file_lines:
+        line = str(line) 
         if line_count in rpm_lines:
             line = line.strip()
             line = re.sub(" +", " ", line)
@@ -99,7 +100,17 @@ def SI_dataframe (df):
     return df
 
 def read_APC(models_dict, verbose=False, convert_to_SI=True):
+    """Will read a dictionary with APC data and convert it to a Pandas DataFrame  
 
+    :param models_dict: Python dictionary structured as: {'Model_1_name' : 'path_to_file' or StringIO, ...}
+    :type models_dict: dict
+    :param verbose: If True will print what it's doing, defaults to False
+    :type verbose: bool, optional
+    :param convert_to_SI: If True will convert all units to SI, defaults to True
+    :type convert_to_SI: bool, optional
+    :return: Pandas Dataframe with the data
+    :rtype: Pandas DataFrame
+    """
     data = []
     
     for model in models_dict.keys():
