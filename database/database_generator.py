@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup 
 import os
-
+from APC_data_handler import read_APC
 
 def get_propeller_links(archive_URL): 
     
@@ -56,6 +56,29 @@ def download_propeller_data(propeller_links):
   
     print ("All data downloaded!")
     return
+
+def get_model_name(file_path):
+    with open(file_path, "r") as file:
+        file_lines = file.readlines(1)
+    file.close()
+
+    line = file_lines[0]
+    line = line.strip()
+    line = re.sub(" +", "", line)
+    return line.split("(")[0] 
+
+
+def convert_file(raw_files_path=os.getcwd() + "/database/raw_files/", num_files = 10, csv_files_path = os.getcwd()+"database/csv_files/"):
+    file_list = os.listdir(raw_files_path)[:num_files]
+    
+    
+    for file_path in file_list:
+        models_dict = {}
+        model = get_model_name(file_path)
+        models_dict[model] = file_path
+    
+        df = read_APC(models_dict)
+        df.to_csv(csv_files_path+model+".csv")
   
   
 if __name__ == "__main__": 

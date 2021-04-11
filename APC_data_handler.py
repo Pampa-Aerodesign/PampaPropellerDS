@@ -99,7 +99,7 @@ def SI_dataframe (df):
                 'Model'] 
     return df
 
-def read_APC(models_dict, verbose=False, convert_to_SI=True):
+def read_APC(models_dict, verbose=False, convert_to_SI=True, concat_to_single_df=True):
     """Will read a dictionary with APC data and convert it to a Pandas DataFrame  
 
     :param models_dict: Python dictionary structured as: {'Model_1_name' : 'path_to_file' or StringIO, ...}
@@ -108,6 +108,8 @@ def read_APC(models_dict, verbose=False, convert_to_SI=True):
     :type verbose: bool, optional
     :param convert_to_SI: If True will convert all units to SI, defaults to True
     :type convert_to_SI: bool, optional
+    :param concat_to_single_df: If True will concatenate all dataframes, defaults to True
+    :type concat_to_single_df: bool, optional
     :return: Pandas Dataframe with the data
     :rtype: Pandas DataFrame
     """
@@ -136,11 +138,14 @@ def read_APC(models_dict, verbose=False, convert_to_SI=True):
             cache = SI_dataframe(cache)
         
         data.append(cache)
-                
-    df = pd.concat(data, ignore_index=True)
     
-    return df
-
+    if concat_to_single_df:                
+        df = pd.concat(data, ignore_index=True)
+        return df
+    
+    if not concat_to_single_df:                
+        return data
+    
 
 
 if __name__ == "__main__":
