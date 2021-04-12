@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup 
 import os
 from APC_data_handler import read_APC
+import re
+
 
 def get_propeller_links(archive_URL): 
     
@@ -29,15 +31,14 @@ def get_propeller_links(archive_URL):
 
 def download_propeller_data(propeller_links): 
     
-    #Need the User-Agent otherwise will get the 403 HTTPs error (No response)
+    #Need the User-Agent otherwise will get the 403 HTTPs error (No response) (https://stackoverflow.com/questions/54154583/beautifulsoup-returning-403-error-for-some-sites)
     headers = {"User-Agent" : "Mozilla/5.0 (X11; CrOS x86_64 13729.72.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.116 Safari/537.36"
                }
     #Get the path to this folder
     path = os.getcwd() + "/database/raw_files/"
     
-    for link in propeller_links:         
-        # obtain filename by splitting url and getting 
-        # last string 
+    for index, link in propeller_links:         
+        # obtain filename by splitting url and getting the last string 
         file_name = path+link.split('/')[-1] 
   
         print( "Downloading file:%s"%file_name.split('/')[-1]) 
@@ -45,14 +46,14 @@ def download_propeller_data(propeller_links):
         # create response object 
         r = requests.get(link, stream = True, headers=headers) 
           
-        # download started
- 
+        # Download
         with open(file_name, 'wb+') as f: 
             for chunk in r.iter_content(chunk_size = 1024*1024): 
                 if chunk: 
                     f.write(chunk) 
           
-        print( "Propeller %s downloaded!\n"%file_name.split('/')[-1])
+        print( "Propeller {} downloaded!\n".format(file_name.split('/')[-1]))
+        print( "{} out of {} propellers downloaded (%d)\ \n"%file_name.split('/')[-1])
   
     print ("All data downloaded!")
     return
@@ -68,18 +69,18 @@ def get_model_name(file_path):
     return line.split("(")[0] 
 
 
-def convert_file(raw_files_path=os.getcwd() + "/database/raw_files/", num_files = 10, csv_files_path = os.getcwd()+"database/csv_files/"):
-    file_list = os.listdir(raw_files_path)[:num_files]
+def generate_CSVs(raw_files_path=os.getcwd() + "/database/raw_files/", num_files = None, csv_files_path = os.getcwd()+"/database/csv_files/"):
     
+    if num_files is not None:
+        file_list = [raw_files_path + file for file in os.listdir(raw_files_path)[:num_files]]
+    
+    else:
+        file_list = [raw_files_path + file for file in os.listdir(raw_files_path)]
     
     for file_path in file_list:
-        models_dict = {}
         model = get_model_name(file_path)
-        models_dict[model] = file_path
-    
-        df = read_APC(models_dict)
-        df.to_csv(csv_files_path+model+".csv")
-  
+        
+        df = read_APC(file_path, save_to_path=csv_files_path+model+".csv")
   
 if __name__ == "__main__": 
   
