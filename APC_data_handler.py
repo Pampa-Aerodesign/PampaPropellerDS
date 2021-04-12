@@ -1,7 +1,8 @@
 import pandas as pd
 import re
 from io import StringIO    
-    
+
+
 def APC_to_csv(file_lines, verbose):
     """Converts list of lines in an APC performance file (file_lines) to a csv buffer
 
@@ -84,7 +85,7 @@ def read_APC(filepath_or_buffer, verbose=False, save_to_path=None, save_model_na
     else:
         file_lines = filepath_or_buffer.readlines()
     
-    if save_model_name or verbose:
+    if (save_model_name or verbose):
         model_name = get_model_name()
     
     if verbose:
