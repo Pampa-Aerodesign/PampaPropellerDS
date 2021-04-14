@@ -3,3 +3,4 @@ sandbox.ipynb
 .vscode/settings.json
 database/__pycache__
 database/propeller_db.json
+database/__pycache__
