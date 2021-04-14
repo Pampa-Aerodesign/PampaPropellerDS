@@ -1,5 +1,5 @@
 Pampa_prop_app.code-workspace
 sandbox.ipynb
 .vscode/settings.json
-__pycache__/APC_data_handler.cpython-38.pyc
+database/__pycache__
 database/propeller_db.json
