@@ -1,5 +1,4 @@
-![](https://github.com/PampaAerodesign/PampaPropellerDB/blob/master/docs/logo.png?raw=true)
-
+<img src="https://github.com/PampaAerodesign/PampaPropellerDB/blob/master/docs/logo.png?raw=true" width="200" height="200" />
 # PampaPropellerDB
 This is Pampa's Propeller DataBase App
 
