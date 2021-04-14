@@ -3,9 +3,10 @@ from bs4 import BeautifulSoup
 import os
 from APC_data_handler import read_APC
 import re
+from datetime import datetime
+from tinydb import TinyDB
 
-
-def get_propeller_links(archive_URL): 
+def get_propeller_links(archive_URL="https://www.apcprop.com/files/"): 
     
     # create response object 
     headers = {"User-Agent" : "Mozilla/5.0 (X11; CrOS x86_64 13729.72.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.116 Safari/537.36"
@@ -81,13 +82,35 @@ def generate_CSVs(raw_files_path=os.getcwd() + "/database/raw_files/", num_files
         model = get_model_name(file_path)
         
         df = read_APC(file_path, save_to_path=csv_files_path+model+".csv")
-  
-if __name__ == "__main__": 
-  
-    # Data from APC propellers
-    archive_URL = "https://www.apcprop.com/files/"
-    
-    # getting all propeller file links 
-    propeller_links = get_propeller_links(archive_URL) 
-    # download all propeller data
-    download_propeller_data(propeller_links)
+
+
+def does_local_db_exist(absolute_path):
+    relative_path = 
+    path = 
+
+def get_model_info(file):
+    csv_files_path = os.getcwd()+"/database/csv_files/"
+    model_name = file[5:].split(".")[0]
+    diameter = model_name.split("x")[0]
+    pitch = model_name.split("x")[1]
+    raw_path = os.getcwd() + "/database/raw_files/" + file
+    csv_path = csv_files_path+model_name+".csv"
+
+    return model_name, diameter, pitch, raw_path, csv_path
+
+
+def generate_json_db(database_path = os.getcwd()):
+    db = TinyDB('/database/propeller_db.json')
+    raw_files_list = os.listdir(os.getcwd() + "/database/raw_files")
+    for file in raw_files_list:
+
+        model_name, diameter, pitch, raw_path, csv_path = get_model_info(file)
+        
+        db.insert({"Name" : model_name,
+                "Manufacturer" : "APC",
+                "Diameter" : diameter,
+                "Pitch" : pitch,
+                "Raw_path" : raw_path,
+                "CSV_path" : csv_path,
+                "timestamp_of_entry" : datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")})
+
