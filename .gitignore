@@ -4,5 +4,6 @@ sandbox.ipynb
 __pycache__/APC_data_handler.cpython-38.pyc
 database/propeller_db.json
 database/__pycache__/
+app/__pycache__/
 __pycache__/
 .vscode/
