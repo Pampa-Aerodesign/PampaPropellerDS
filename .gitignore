@@ -3,4 +3,6 @@ sandbox.ipynb
 .vscode/settings.json
 __pycache__/APC_data_handler.cpython-38.pyc
 database/propeller_db.json
-database/__pycache__
+database/__pycache__/
+__pycache__/
+.vscode/

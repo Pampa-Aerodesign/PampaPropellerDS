@@ -14,6 +14,6 @@ Esse App pretende resolver isso :smiley:
 if not does_local_db_exist(os.getcwd()+"/database/"):
   generate_json_db()
   
-unique_diameters_list = get_unique_diameters_list
+unique_diameters_list = get_unique_diameters_list()
 
 diameter = st.select_slider("Slide to select the propeller's diameter", options=unique_diameters_list)

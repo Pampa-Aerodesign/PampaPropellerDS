@@ -59,18 +59,8 @@ def download_propeller_data(propeller_links):
     print ("All data downloaded!")
     return
 
-def get_model_name(file_path):
-    with open(file_path, "r") as file:
-        file_lines = file.readlines(1)
-    file.close()
-
-    line = file_lines[0]
-    line = line.strip()
-    line = re.sub(" +", "", line)
-    return line.split("(")[0] 
-
-
-def generate_CSVs(raw_files_path=os.getcwd() + "/database/raw_files/", num_files = None, csv_files_path = os.getcwd()+"/database/csv_files/"):
+def generate_CSVs(raw_files_path=os.getcwd() + "/database/raw_files/",
+                  num_files = None, csv_files_path = os.getcwd()+"/database/csv_files/"):
     
     if num_files is not None:
         file_list = [raw_files_path + file for file in os.listdir(raw_files_path)[:num_files]]
@@ -83,17 +73,28 @@ def generate_CSVs(raw_files_path=os.getcwd() + "/database/raw_files/", num_files
         
         df = read_APC(file_path, save_to_path=csv_files_path+model+".csv")
 
+def get_model_name(file_path):
+    with open(file_path, "r") as file:
+        file_lines = file.readlines(1)
+    file.close()
+
+    line = file_lines[0]
+    line = line.strip()
+    line = re.sub(" +", "", line)
+    return line.split("(")[0]
 
 def does_local_db_exist(absolute_path):
-    relative_path = 
-    path = 
-
+    pass
+    
 def get_model_info(file):
+    raw_path = os.getcwd() + "/database/raw_files/" + file
     csv_files_path = os.getcwd()+"/database/csv_files/"
-    model_name = file[5:].split(".")[0]
+    
+    model_name = get_model_name(raw_path)
+    
     diameter = model_name.split("x")[0]
     pitch = model_name.split("x")[1]
-    raw_path = os.getcwd() + "/database/raw_files/" + file
+
     csv_path = csv_files_path+model_name+".csv"
 
     return model_name, diameter, pitch, raw_path, csv_path
