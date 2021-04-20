@@ -18,6 +18,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires = ["beautifulsoup4", "tinydb", "pandas"],
-    packages=setuptools.find_packages(where="database_handler"),
+    packages=["database_handler"],
     python_requires=">=3.6",
 )

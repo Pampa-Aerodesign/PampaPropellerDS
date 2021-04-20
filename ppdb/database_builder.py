@@ -2,8 +2,8 @@ import requests
 import os
 from datetime import datetime
 
-from APC_data_handler import read_APC
-from misc import get_model_name
+from ppdb.APC_data_handler import read_APC
+from ppdb.misc import get_model_name
 
 from bs4 import BeautifulSoup 
 from tinydb import TinyDB
@@ -86,12 +86,14 @@ class database_builder:
         return model_name, diameter, pitch, raw_path, csv_path
 
     
-    def build_local_db(self, path_to_file=None):
-        if path_to_file is None:
+    def build_local_db(self, path_to_db_file=None):
+        if path_to_db_file is None:
             path_to_file = os.getcwd() + "/database/"
         
-        db = TinyDB(path_to_file + 'propeller_db.json')
+        db = TinyDB(path_to_db_file + 'propeller_db.json')
+        
         raw_files_list = os.listdir(self.raw_files_path)
+        
         for file in raw_files_list:
             model_name, diameter, pitch, raw_path, csv_path = self.get_model_info(file)
             
@@ -106,6 +108,6 @@ class database_builder:
 if __name__ == "__main__":
     db = database_builder("/database/raw_files/", "/database/csv_files/", num_files=2)
     db.download_APC_data()
-    db.build_local_db(path_to_file=os.getcwd())
+    db.build_local_db(path_to_db_file=os.getcwd())
 
     
