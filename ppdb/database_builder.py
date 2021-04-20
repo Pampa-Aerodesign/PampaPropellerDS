@@ -88,7 +88,7 @@ class database_builder:
     
     def build_local_db(self, path_to_db_file=None):
         if path_to_db_file is None:
-            path_to_file = os.getcwd() + "/database/"
+            path_to_file = os.getcwd() + "/data/"
         
         db = TinyDB(path_to_db_file + 'propeller_db.json')
         
@@ -106,7 +106,7 @@ class database_builder:
                     "timestamp_of_entry" : datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")})
         
 if __name__ == "__main__":
-    db = database_builder("/database/raw_files/", "/database/csv_files/", num_files=2)
+    db = database_builder("/data/raw_files/", "/data/csv_files/", num_files=2)
     db.download_APC_data()
     db.build_local_db(path_to_db_file=os.getcwd())
 

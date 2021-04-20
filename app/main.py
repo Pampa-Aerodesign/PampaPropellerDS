@@ -15,7 +15,7 @@ infelizmente o formato em que os dados deles é disponibilizado é uma :poop:
 Esse App pretende resolver isso :smiley:
 '''
 
-if not does_local_db_exist(os.getcwd()+"/database/"):
+if not does_local_db_exist(os.getcwd()+"/data/"):
   build_json_db()
   
 unique_diameters_list = get_unique_diameters_list()
