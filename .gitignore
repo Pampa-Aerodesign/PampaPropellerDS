@@ -1,6 +1,10 @@
 Pampa_prop_app.code-workspace
 sandbox.ipynb
 .vscode/settings.json
-database/__pycache__
-database/propeller_db.json
-database/__pycache__
+__pycache__/APC_data_handler.cpython-38.pyc
+data/propeller_db.json
+data/__pycache__/
+app/__pycache__/
+__pycache__/
+.vscode/
+ppbd.egg-info/
