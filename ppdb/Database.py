@@ -34,13 +34,13 @@ class Database(TinyDB):
     def append_model(self, model_raw_path):
         model_name, diameter, pitch, raw_path, csv_path = self.get_model_info(model_raw_path)
         
-        self.insert({"Name" : model_name,
-                "manufacturer" : "APC",
-                "diameter" : diameter,
-                "pitch" : pitch,
-                "raw_path" : raw_path,
-                "csv_path" : csv_path,
-                "timestamp_of_entry" : datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")})
+        self.insert({"name" : model_name,
+                     "manufacturer" : "APC",
+                     "diameter" : diameter,
+                     "pitch" : pitch,
+                     "raw_path" : raw_path,
+                     "csv_path" : csv_path,
+                     "timestamp_of_entry" : datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")})
     
     def build_local_db(self, from_scratch=True):
         

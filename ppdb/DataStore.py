@@ -80,21 +80,9 @@ class DataStore:
             
             df = read_APC(file_path, save_to_path=self.csv_files_path+model+".csv")
     
-    def get_model_info(self, file_name):
-        raw_path = self.raw_files_path + file_name
-        
-        model_name = get_model_name(raw_path)
-        
-        diameter = model_name.split("x")[0]
-        pitch = model_name.split("x")[1]
 
-        csv_path = self.csv_files_path+model_name+".csv"
-
-        return model_name, diameter, pitch, raw_path, csv_path
-
-    
-        
 if __name__ == "__main__":
     test_ds = DataStore("/data/raw_files/", "/data/csv_files/", num_files=2)
     test_ds.download_APC_data()
+    test_ds.generate_CSVs()
     
