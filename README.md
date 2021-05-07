@@ -2,7 +2,7 @@
 
 # PampaPropellerDB
 
-This is Pampa's Propeller DataBase App
+This is Pampa's Propeller DataBase Python library, here you will find dynamic performance data from all propellers made by APC and possibly more in the future.
 
 
 ## Roadmap
@@ -12,4 +12,4 @@ This is Pampa's Propeller DataBase App
 
 ~~v0.3 - Convert all APC raw data into CSVs and store them in the repo~~
 
-v0.4 - Show data from the APC files in the App
+v0.4 - Show data from the APC files in the Streamlit App
