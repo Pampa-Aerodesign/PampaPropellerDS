@@ -2,7 +2,7 @@
 
 # PampaPropellerDB
 
-This is Pampa's Propeller DataBase Python library, here you will find dynamic performance data from all propellers made by APC and possibly more in the future. documentation and tests are in development.
+This is Pampa's Propeller DataBase Python library, here you will find dynamic performance data from all propellers made by APC and possibly more in the future. Documentation and tests are in development.
 
 
 ## Roadmap
