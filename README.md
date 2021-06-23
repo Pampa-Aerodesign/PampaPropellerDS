@@ -1,6 +1,6 @@
-<img src="docs/logo.png?raw=true" width="200" height="200" />
+<img src="logo.png?raw=true" width="200" height="200" />
 
-# PampaPropellerDB
+# PampaPropellerDS
 
 This is Pampa's Propeller Dataset Python library, here you will find dynamic performance data from all propellers made by APC and possibly more in the future. Documentation and tests are in development.
 
