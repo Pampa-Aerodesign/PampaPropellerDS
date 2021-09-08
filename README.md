@@ -2,7 +2,9 @@
 
 # PampaPropellerDS
 
-This is Pampa's Propeller Dataset Python library, here you will find dynamic performance data from all propellers made by APC and possibly more in the future. Documentation and tests are in development.
+Over the years, it has been difficult to use the data provided by our propeller manufacturer Advanced Precision Composite (APC), as it is made available in a .dat format with littler standardization. To solve this problem, Pampa Aerodesign developed a crawler to download the performance data from all APC propellers and transform it to CSVs. Currently the data-set has performance data for 525 propellers for RPMs between 1000-20000. This collection was called Pampa Propeller Data-Set or PPDS.
+
+Here you can find its associated Python library, where we hope to add a Streamlit web app to facilitate the analisis of any given propeller. We also hope to add date by more manufacturers in the future. Documentation and tests are in development.
 
 
 ## Roadmap
