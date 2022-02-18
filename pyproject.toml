@@ -2,7 +2,7 @@
 name = "ppds"
 version = "0.1.0"
 description = "A propeller dataset for Aerodesign teams."
-authors = ["Pampa Aerodesing <aerodesign@ufrgs.br>"]
+authors = ["Pampa Aerodesign <aerodesign@ufrgs.br>"]
 license = "MIT"
 
 [tool.poetry.dependencies]

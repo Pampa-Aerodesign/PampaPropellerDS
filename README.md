@@ -6,6 +6,21 @@ Over the years, it has been difficult to use the data provided by our propeller 
 
 Here you can find its associated Python library, where we hope to add a Streamlit web app to facilitate the analisis of any given propeller. We also hope to add date by more manufacturers in the future. Documentation and tests are in development.
 
+## Local installation
+To run this code locally you must clone the repository and install the lib to do so copy and paste the following commands onto your terminal:
+
+```bash
+git clone https://github.com/Pampa-Aerodesign/PampaPropellerDS.git
+```
+
+```bash
+cd PampaPropellerDS
+```
+
+
+```bash
+pip install .
+```
 
 ## Roadmap
 ~~v0.1 - Download APC data and store files in the repo~~
