@@ -1,5 +1,6 @@
 import re
 
+
 def get_model_name(file_path):
     with open(file_path, "r") as file:
         file_lines = file.readlines(1)
