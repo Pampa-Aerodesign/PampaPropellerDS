@@ -4,7 +4,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
-from ppds.crawler.APC_data_handler import get_model_name, read_APC
+from ppds.crawler.apc_data_handler import apc_to_csv, get_model_name
 
 logging.basicConfig(level=logging.INFO)
 
@@ -92,15 +92,24 @@ class DatabaseBuilder:
             )
 
     def generate_CSVs(self):
-        """Will generate all csv files from the raw files."""
-        file_list = [
-            self.raw_files_path + file for file in os.listdir(self.raw_files_path)
+        """Will generate the csv files from the raw files."""
+        if self.num_files:
+            raw_files_list = [
+                self.raw_files_path + file for file in os.listdir(self.raw_files_path)
+            ][: self.num_files]
+        else:
+            raw_files_list = [
+                os.path.join(self.raw_files_path, file)
+                for file in os.listdir(self.raw_files_path)
+            ]
+
+        csv_files_list = [
+            os.path.join(self.csv_files_path, get_model_name(file), ".csv")
+            for file in raw_files_list
         ]
 
-        for file_path in file_list:
-            model = get_model_name(file_path)
-
-            df = read_APC(file_path, save_to_path=self.csv_files_path + model + ".csv")
+        for i in range(0, len(raw_files_list)):
+            apc_to_csv(raw_files_list[i], csv_files_list[i])
 
 
 if __name__ == "__main__":
