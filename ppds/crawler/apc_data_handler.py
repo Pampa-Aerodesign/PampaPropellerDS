@@ -1,18 +1,14 @@
 import re
-from io import StringIO
-
-import pandas as pd
 
 
-def APC_to_csv(file_lines, verbose):
-    """Converts list of lines in an APC performance file (file_lines) to a csv buffer
+def _apc_to_csv_buffer(file_lines: list):
+    """Will convert APC data to a csv file.
 
-    :param file_lines: A Python list with all the lines in a file
-    :type file_lines: list
-    :param verbose: If True will print logs
-    :type verbose: bool
-    :return: Buffer with the lines organized as a CSV
-    :rtype: StringIO
+    Args:
+        file_lines (list): List of lines from the APC file.
+
+    Returns:
+        str: String with csv data.
     """
     buffer = ""
     searching_headers = True
@@ -53,11 +49,18 @@ def APC_to_csv(file_lines, verbose):
             buffer = buffer + units_line + "," + "RPM" + "\n"
             searching_units = False
 
-    buffer = StringIO(buffer)
     return buffer
 
 
-def get_model_name(filepath_or_buffer):
+def get_model_name(filepath_or_buffer: str) -> str:
+    """Will get the model name from the APC file.
+
+    Args:
+        filepath_or_buffer (str): Filepath or buffer with APC data.
+
+    Returns:
+        str: Model name.
+    """
     if type(filepath_or_buffer) is str:
         with open(filepath_or_buffer, "r") as file:
             file_lines = file.readlines(1)
@@ -71,39 +74,26 @@ def get_model_name(filepath_or_buffer):
     return line.split("(")[0]
 
 
-def read_APC(
-    filepath_or_buffer, verbose=False, save_to_path=None, save_model_name=False
+def apc_to_csv(
+    raw_filepath_or_buffer: str,
+    csv_filepath: str,
 ):
-    """Will read a dictionary with APC data and convert it to a Pandas DataFrame
+    """Will convert a raw APC data to a csv file.
 
-    :param models_dict: Python dictionary structured as: {'Model_1_name' : 'path_to_file' or StringIO, ...}
-    :type models_dict: dict
-    :param verbose: If True will print what it's doing, defaults to False
-    :type verbose: bool, optional
-    :param save_to_path: If True will save dataframe to a csv file, defaults to False
-    :type save_to_path: bool, optional
-    :param save_model_name: If True will create a column on dataframe with the model name, defaults to False
-    :type save_model_name: bool, optional
-    :return: Pandas Dataframe with the data
-    :rtype: Pandas DataFrame
+    Args:
+        raw_filepath_or_buffer (str): Filepath or buffer with raw APC data.
+        csv_filepath (str, optional): Filepath to save the csv file.
     """
-    if type(filepath_or_buffer) is str:
-        with open(filepath_or_buffer) as file:
+
+    if type(raw_filepath_or_buffer) is str:
+        with open(raw_filepath_or_buffer) as file:
             file_lines = file.readlines()
         file.close()
     else:
-        file_lines = filepath_or_buffer.readlines()
+        file_lines = raw_filepath_or_buffer.readlines()
 
-    if save_model_name or verbose:
-        model_name = get_model_name()
+    buffer = _apc_to_csv_buffer(file_lines)
 
-    if verbose:
-        print("Reading Model: " + model_name)
-        print("------------------------------")
-
-    df = pd.read_csv(APC_to_csv(file_lines, verbose))
-
-    if save_to_path is not None:
-        df.to_csv(save_to_path)
-
-    return df
+    with open(csv_filepath, "w") as file:
+        file.write(buffer)
+    file.close()
