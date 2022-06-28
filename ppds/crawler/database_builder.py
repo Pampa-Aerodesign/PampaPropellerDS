@@ -72,7 +72,6 @@ class DatabaseBuilder:
             logging.debug("Downloading file:%s" % file_name.split("/")[-1])
 
             try:
-                logging.debug(f"Downloading: {link}")
                 r = requests.get(link, stream=True, headers=headers)
 
             except requests.exceptions.RequestException as e:
@@ -84,7 +83,7 @@ class DatabaseBuilder:
                         file.write(chunk)
             file.close()
 
-            logging.info("Propeller {} downloaded.".format(file_name.split("/")[-1]))
+            logging.debug("Propeller {} downloaded.".format(file_name.split("/")[-1]))
             logging.info(
                 "{} out of {} propellers downloaded. \n".format(
                     index + 1, len(propeller_links)
@@ -104,14 +103,22 @@ class DatabaseBuilder:
             ]
 
         csv_files_list = [
-            os.path.join(self.csv_files_path, get_model_name(file), ".csv")
+            os.path.join(self.csv_files_path, get_model_name(file) + ".csv")
             for file in raw_files_list
         ]
 
         for i in range(0, len(raw_files_list)):
+            logging.debug("Generating CSV file: {}".format(csv_files_list[i]))
             apc_to_csv(raw_files_list[i], csv_files_list[i])
+            logging.info(
+                "{} out of {} propellers converted to csv. \n".format(
+                    i + 1, len(raw_files_list)
+                )
+            )
 
 
 if __name__ == "__main__":
-    db = DatabaseBuilder("/data/raw_files/", "/data/csv_files/", num_files=2)
+    NUM_FILES = 3
+    db = DatabaseBuilder("/data/raw_files/", "/data/csv_files/", num_files=NUM_FILES)
     db.download_APC_data()
+    db.generate_CSVs()

@@ -107,4 +107,3 @@ def apc_to_csv(
         file.close()
     except Exception as e:
         logging.error(f"Fail writing {csv_filepath}\n{e}")
-
