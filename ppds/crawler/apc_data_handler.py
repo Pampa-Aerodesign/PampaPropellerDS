@@ -14,6 +14,7 @@ def _apc_to_csv_buffer(file_lines: list):
     buffer = ""
     searching_headers = True
     searching_units = False
+    index = 0
     for line in file_lines:
         if re.search("PROP RPM", line):
             rpm = line.strip()
@@ -24,7 +25,8 @@ def _apc_to_csv_buffer(file_lines: list):
             data_line = line.strip()
             data_line = re.sub(" +", ",", data_line)
 
-            buffer = buffer + data_line + "," + rpm + "\n"
+            buffer = buffer + f"{index}," + data_line + "," + rpm + "\n"
+            index += 1
 
         if (
             (not re.search(r"[0-9\(\)\:]", line))
@@ -34,8 +36,7 @@ def _apc_to_csv_buffer(file_lines: list):
             headers_line = line.strip()
             headers_line = re.sub(" +", ",", headers_line)
 
-            buffer = buffer + headers_line + "," + "RPM" + "\n"
-
+            buffer = buffer + "," + headers_line + "," + "RPM" + "\n"
             searching_headers = False
             searching_units = True
             continue
@@ -47,7 +48,8 @@ def _apc_to_csv_buffer(file_lines: list):
             if len(headers_line.split(",")) != len(units_line.split(",")):
                 units_line = units_line[:18] + "-,-,-," + units_line[18:]
 
-            buffer = buffer + units_line + "," + "RPM" + "\n"
+            buffer = buffer + f"{index}," + units_line + "," + "RPM" + "\n"
+            index += 1
             searching_units = False
 
     return buffer
