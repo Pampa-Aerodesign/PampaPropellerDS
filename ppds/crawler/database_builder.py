@@ -92,7 +92,7 @@ class DatabaseBuilder:
                 )
             )
 
-        print("All data downloaded!")
+        logging.info("All files downloaded!")
 
     def generate_CSVs(self):
         """Will generate all csv files from the raw files.
