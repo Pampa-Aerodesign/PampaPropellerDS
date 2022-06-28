@@ -166,6 +166,34 @@ optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [[package]]
+name = "pint"
+version = "0.19.2"
+description = "Physical quantities module"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+numpy = ["numpy (>=1.19.5)"]
+test = ["pytest", "pytest-mpl", "pytest-cov", "pytest-subtests"]
+uncertainties = ["uncertainties (>=3.1.6)"]
+
+[[package]]
+name = "pint-pandas"
+version = "0.2"
+description = "Physical quantities module"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+pandas = ">=1.2"
+pint = ">=0.17"
+
+[package.extras]
+test = ["pytest", "pytest-mpl", "pytest-cov", "pytest-subtests", "codecov", "coveralls", "nbval"]
+
+[[package]]
 name = "platformdirs"
 version = "2.5.0"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
@@ -278,7 +306,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "8bf72786e43225302ef4dc2c64f701b788f75a6935968f79a108faec4199c701"
+content-hash = "15b722ab87ec9a19c8644735345c220e45fe15b9b55d90db9837ed45a2fc695d"
 
 [metadata.files]
 autoflake = [
@@ -453,6 +481,13 @@ pandas = [
 pathspec = [
     {file = "pathspec-0.9.0-py2.py3-none-any.whl", hash = "sha256:7d15c4ddb0b5c802d161efc417ec1a2558ea2653c2e8ad9c19098201dc1c993a"},
     {file = "pathspec-0.9.0.tar.gz", hash = "sha256:e564499435a2673d586f6b2130bb5b95f04a3ba06f81b8f895b651a3c76aabb1"},
+]
+pint = [
+    {file = "Pint-0.19.2.tar.gz", hash = "sha256:e1d4989ff510b378dad64f91711e7bdabe5ca78d75b06a18569ac454678c4baf"},
+]
+pint-pandas = [
+    {file = "Pint-Pandas-0.2.tar.gz", hash = "sha256:6f60d2e80ac102e0f94addb9206e0f6cca5ee42f0b7f8930d8c798002e41fa87"},
+    {file = "Pint_Pandas-0.2-py2.py3-none-any.whl", hash = "sha256:214e4d9b79f540e7caef3a1cfd3d9ee31cba6b1559303a49f4de04a5756cc507"},
 ]
 platformdirs = [
     {file = "platformdirs-2.5.0-py3-none-any.whl", hash = "sha256:30671902352e97b1eafd74ade8e4a694782bd3471685e78c32d0fdfd3aa7e7bb"},

@@ -12,6 +12,8 @@ tinydb = "^4.6.1"
 pandas = "^1.4.1"
 requests = "^2.27.1"
 lxml = "^4.9.0"
+Pint = "^0.19.2"
+Pint-Pandas = "^0.2"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
