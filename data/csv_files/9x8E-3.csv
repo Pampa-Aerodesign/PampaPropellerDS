@@ -1,4 +1,4 @@
-,V,J,Pe,Ct,Cp,PWR,Torque,Thrust,PWR.1,Torque.1,Thrust.1,THR/PWR,Mach,Reyn,RPM
+,V,J,Pe,Ct,Cp,PWR,Torque,Thrust,PWR,Torque,Thrust,THR/PWR,Mach,Reyn,RPM
 0,(mph),(Adv_Ratio),-,-,-,(Hp),(In-Lbf),(Lbf),(W),(N-m),(N),(g/W),-,-,RPM
 1,0.0,0.00,0.0000,0.2124,0.1163,0.001,0.035,0.044,0.412,0.004,0.197,48.874,0.04,10575.,1000
 2,0.3,0.04,0.0636,0.2113,0.1193,0.001,0.036,0.044,0.423,0.004,0.196,47.389,0.04,10576.,1000
