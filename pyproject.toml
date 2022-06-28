@@ -14,6 +14,8 @@ requests = "^2.27.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
+isort = "^5.10.1"
+autoflake = "^1.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
