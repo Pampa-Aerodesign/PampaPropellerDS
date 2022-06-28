@@ -2,8 +2,7 @@ import requests
 import os
 from datetime import datetime
 
-from ppds.APC_data_handler import read_APC
-from ppds.misc import get_model_name
+from ppds.crawler.APC_data_handler import read_APC, get_model_name
 
 from bs4 import BeautifulSoup
 from tinydb import TinyDB
