@@ -9,7 +9,7 @@ from ppds.crawler.apc_data_handler import apc_to_csv, get_model_name
 logging.basicConfig(level=logging.INFO)
 
 
-class DatabaseBuilder:
+class DatasetBuilder:
     def __init__(self, raw_files_path: str, csv_files_path: str, num_files: int = None):
         """DatabaseBuilder constructor
 
@@ -85,8 +85,8 @@ class DatabaseBuilder:
 
             logging.debug("Propeller {} downloaded.".format(file_name.split("/")[-1]))
             logging.info(
-                "{} out of {} propellers downloaded. \n".format(
-                    index + 1, len(propeller_links)
+                "{} out of {} ({:.2f} %) propellers downloaded. \n".format(
+                    index + 1, len(propeller_links), (index + 1) / len(propeller_links) * 100 
                 )
             )
 
@@ -118,8 +118,8 @@ class DatabaseBuilder:
 
 
 if __name__ == "__main__":
-    NUM_FILES = 3
-    db = DatabaseBuilder(
+    NUM_FILES = None
+    db = DatasetBuilder(
         os.path.join("data", "raw_files", ""),
         os.path.join("data", "csv_files", ""),
         num_files=NUM_FILES,
