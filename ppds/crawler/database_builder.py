@@ -119,6 +119,10 @@ class DatabaseBuilder:
 
 if __name__ == "__main__":
     NUM_FILES = 3
-    db = DatabaseBuilder("/data/raw_files/", "/data/csv_files/", num_files=NUM_FILES)
+    db = DatabaseBuilder(
+        os.path.join("data", "raw_files", ""),
+        os.path.join("data", "csv_files", ""),
+        num_files=NUM_FILES,
+    )
     db.download_APC_data()
     db.generate_CSVs()
