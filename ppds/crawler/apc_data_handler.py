@@ -1,3 +1,4 @@
+import logging
 import re
 
 
@@ -61,12 +62,15 @@ def get_model_name(filepath_or_buffer: str) -> str:
     Returns:
         str: Model name.
     """
-    if type(filepath_or_buffer) is str:
-        with open(filepath_or_buffer, "r") as file:
-            file_lines = file.readlines(1)
-        file.close()
-    else:
-        file_lines = filepath_or_buffer.readlines()
+    try:
+        if type(filepath_or_buffer) is str:
+            with open(filepath_or_buffer) as file:
+                file_lines = file.readlines()
+            file.close()
+        else:
+            file_lines = filepath_or_buffer.readlines()
+    except Exception as e:
+        logging.error(f"Fail reading {filepath_or_buffer}\n{e}")
 
     line = file_lines[0]
     line = line.strip()
@@ -85,15 +89,22 @@ def apc_to_csv(
         csv_filepath (str, optional): Filepath to save the csv file.
     """
 
-    if type(raw_filepath_or_buffer) is str:
-        with open(raw_filepath_or_buffer) as file:
-            file_lines = file.readlines()
-        file.close()
-    else:
-        file_lines = raw_filepath_or_buffer.readlines()
+    try:
+        if type(raw_filepath_or_buffer) is str:
+            with open(raw_filepath_or_buffer) as file:
+                file_lines = file.readlines()
+            file.close()
+        else:
+            file_lines = raw_filepath_or_buffer.readlines()
+    except Exception as e:
+        logging.error(f"Fail reading {raw_filepath_or_buffer}\n{e}")
 
     buffer = _apc_to_csv_buffer(file_lines)
 
-    with open(csv_filepath, "w") as file:
-        file.write(buffer)
-    file.close()
+    try:
+        with open(csv_filepath, "w") as file:
+            file.write(buffer)
+        file.close()
+    except Exception as e:
+        logging.error(f"Fail writing {csv_filepath}\n{e}")
+
