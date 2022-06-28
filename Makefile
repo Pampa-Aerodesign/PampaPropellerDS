@@ -1,11 +1,11 @@
 black:
-	poetry run black app/*.py
+	poetry run black ppds/**/*.py 
 
 isort:
-	poetry run isort --profile black app/*.py
+	poetry run isort --profile black ppds/**/*.py 
 
 autoflake:
-	poetry run autoflake --exclude=app.py,performance.py app/*.py 
+	poetry run autoflake --exclude=.venv/* ppds/**/*.py 
 
 .PHONY: format
 format:

@@ -1,11 +1,11 @@
-import requests
 import os
 from datetime import datetime
 
-from ppds.crawler.APC_data_handler import read_APC, get_model_name
-
+import requests
 from bs4 import BeautifulSoup
 from tinydb import TinyDB
+
+from ppds.crawler.APC_data_handler import get_model_name, read_APC
 
 
 class database_builder:
@@ -84,43 +84,6 @@ class database_builder:
             model = get_model_name(file_path)
 
             df = read_APC(file_path, save_to_path=self.csv_files_path + model + ".csv")
-
-    def get_model_info(self, file_name):
-        raw_path = self.raw_files_path + file_name
-
-        model_name = get_model_name(raw_path)
-
-        diameter = model_name.split("x")[0]
-        pitch = model_name.split("x")[1]
-
-        csv_path = self.csv_files_path + model_name + ".csv"
-
-        return model_name, diameter, pitch, raw_path, csv_path
-
-    def build_local_db(self, path_to_db_file=None):
-        if path_to_db_file is None:
-            path_to_file = os.getcwd() + "/data/"
-
-        db = TinyDB(path_to_db_file + "propeller_db.json")
-
-        raw_files_list = os.listdir(self.raw_files_path)
-
-        for file in raw_files_list:
-            model_name, diameter, pitch, raw_path, csv_path = self.get_model_info(file)
-
-            db.insert(
-                {
-                    "Name": model_name,
-                    "Manufacturer": "APC",
-                    "Diameter": diameter,
-                    "Pitch": pitch,
-                    "Raw_path": raw_path,
-                    "CSV_path": csv_path,
-                    "timestamp_of_entry": datetime.now().strftime(
-                        "%Y-%m-%d %H:%M:%S.%f"
-                    ),
-                }
-            )
 
 
 if __name__ == "__main__":

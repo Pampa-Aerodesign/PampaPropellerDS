@@ -1,6 +1,7 @@
-import pandas as pd
 import re
 from io import StringIO
+
+import pandas as pd
 
 
 def APC_to_csv(file_lines, verbose):
