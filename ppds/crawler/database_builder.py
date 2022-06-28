@@ -8,8 +8,15 @@ from tinydb import TinyDB
 from ppds.crawler.APC_data_handler import get_model_name, read_APC
 
 
-class database_builder:
-    def __init__(self, raw_files_path, csv_files_path, num_files=None):
+class DatabaseBuilder:
+    def __init__(self, raw_files_path:str, csv_files_path:str, num_files:int=None):
+        """DatabaseBuilder constructor
+
+        Args:
+            raw_files_path (str): Path where raw files will be stored.
+            csv_files_path (str): Path where csv files will be stored.
+            num_files (int, optional): Maximum number of files to download. Defaults to None.
+        """
         os.makedirs(raw_files_path, exist_ok=True)
         os.makedirs(csv_files_path, exist_ok=True)
         self.raw_files_path = raw_files_path
@@ -18,7 +25,15 @@ class database_builder:
         if num_files is not None:
             self.num_files = num_files
 
-    def get_APC_links(self, archive_URL="https://www.apcprop.com/files/"):
+    def get_APC_links(self, archive_URL:str="https://www.apcprop.com/files/") -> list:
+        """Will get all propeller links from the APC website.
+
+        Args:
+            archive_URL (_type_, optional): Archive where files will be fetched. Defaults to "https://www.apcprop.com/files/".
+
+        Returns:
+            _type_: List of propeller links.
+        """        
 
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; CrOS x86_64 13729.72.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.116 Safari/537.36"
@@ -41,6 +56,8 @@ class database_builder:
         return propeller_links
 
     def download_APC_data(self):
+        """Will download all propeller data from the website.
+        """        
         propeller_links = self.get_APC_links()
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; CrOS x86_64 13729.72.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.116 Safari/537.36"
@@ -69,6 +86,8 @@ class database_builder:
         print("All data downloaded!")
 
     def generate_CSVs(self):
+        """Will generate all csv files from the raw files.
+        """        
         if self.num_files is not None:
             file_list = [
                 self.raw_files_path + file
@@ -87,6 +106,6 @@ class database_builder:
 
 
 if __name__ == "__main__":
-    db = database_builder("/data/raw_files/", "/data/csv_files/", num_files=2)
+    db = DatabaseBuilder("/data/raw_files/", "/data/csv_files/", num_files=2)
     db.download_APC_data()
     db.build_local_db(path_to_db_file=os.getcwd())
