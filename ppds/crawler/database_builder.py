@@ -1,4 +1,6 @@
 import os
+import logging
+import sys
 from datetime import datetime
 
 import requests
@@ -7,6 +9,7 @@ from tinydb import TinyDB
 
 from ppds.crawler.APC_data_handler import get_model_name, read_APC
 
+logging.basicConfig(level=logging.INFO)
 
 class DatabaseBuilder:
     def __init__(self, raw_files_path:str, csv_files_path:str, num_files:int=None):
@@ -25,7 +28,7 @@ class DatabaseBuilder:
         if num_files is not None:
             self.num_files = num_files
 
-    def get_APC_links(self, archive_URL:str="https://www.apcprop.com/files/") -> list:
+    def _get_APC_links(self, archive_URL:str="https://www.apcprop.com/files/") -> list:
         """Will get all propeller links from the APC website.
 
         Args:
@@ -39,9 +42,12 @@ class DatabaseBuilder:
             "User-Agent": "Mozilla/5.0 (X11; CrOS x86_64 13729.72.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.116 Safari/537.36"
         }
 
-        r = requests.get(archive_URL, headers=headers)
+        try:
+            response = requests.get(archive_URL, headers=headers)
+        except requests.exceptions.RequestException as e:
+            logging.error(e)
 
-        soup = BeautifulSoup(r.content, "lxml")
+        soup = BeautifulSoup(response.content, "lxml")
 
         links = soup.find_all("a")
 
@@ -58,7 +64,7 @@ class DatabaseBuilder:
     def download_APC_data(self):
         """Will download all propeller data from the website.
         """        
-        propeller_links = self.get_APC_links()
+        propeller_links = self._get_APC_links()
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; CrOS x86_64 13729.72.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.116 Safari/537.36"
         }
@@ -66,9 +72,12 @@ class DatabaseBuilder:
         for index, link in enumerate(propeller_links):
             file_name = self.raw_files_path + link.split("/")[-1]
 
-            print("Downloading file:%s" % file_name.split("/")[-1])
+            logging.info("Downloading file:%s" % file_name.split("/")[-1])
 
+        try:
             r = requests.get(link, stream=True, headers=headers)
+        except requests.exceptions.RequestException as e:
+            logging.error(e)
 
             with open(file_name, "wb+") as file:
                 for chunk in r.iter_content(chunk_size=1024 * 1024):
@@ -76,8 +85,8 @@ class DatabaseBuilder:
                         file.write(chunk)
             file.close()
 
-            print("\nPropeller {} downloaded!\n".format(file_name.split("/")[-1]))
-            print(
+            logging.info("Propeller {} downloaded!".format(file_name.split("/")[-1]))
+            logging.info(
                 "{} out of {} propellers downloaded \n".format(
                     index + 1, len(propeller_links)
                 )
@@ -108,4 +117,3 @@ class DatabaseBuilder:
 if __name__ == "__main__":
     db = DatabaseBuilder("/data/raw_files/", "/data/csv_files/", num_files=2)
     db.download_APC_data()
-    db.build_local_db(path_to_db_file=os.getcwd())
